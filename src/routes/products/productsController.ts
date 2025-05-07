@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { db } from "../../db/index";
-import { productsTable } from "../../db/productsSchema";
+import { productsTable
+ } from "../../db/productsSchema";
 import { eq } from "drizzle-orm";
 
 export const listProducts = async (req: Request, res: Response) => {
@@ -30,11 +31,13 @@ export const getProductByID = async (req: Request, res: Response) => {
 };
 
 export const createProduct = async (req: Request, res: Response) => {
-  console.log("Data: ", req.body);
+
   try {
+    const data: any = req.body.cleanBody;
+    console.log(data)
     const [product] = await db
       .insert(productsTable)
-      .values(req.body)
+      .values(data)
       .returning();
     res.status(201).json(product);
   } catch (e) {
@@ -45,13 +48,14 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const updateFields = req.body;
-    console.log(updateFields)
+    console.log(id)
+    const updateFields = req.body.cleanBody;
+ 
     const [product] = await db
       .update(productsTable)
       .set(updateFields)
-      .where(eq(productsTable.id, id));
-
+      .where(eq(productsTable.id, id)).returning();
+      console.log(product)
     if (product) {
       res.json(product);
     } else {

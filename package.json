@@ -16,12 +16,16 @@
   },
   "dependencies": {
     "drizzle-orm": "^0.43.1",
+    "drizzle-zod": "^0.7.1",
     "express": "^5.1.0",
+    "lodash": "^4.17.21",
     "pg": "^8.15.6",
-    "postgres": "^3.4.5"
+    "postgres": "^3.4.5",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
+    "@types/lodash": "^4.17.16",
     "@types/pg": "^8.15.0",
     "drizzle-kit": "^0.31.1",
     "tsx": "^4.19.4",
