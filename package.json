@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --import=tsx --watch --env-file=.env src/index.ts",
-    "build": "tsc",
+    "build":  "tsc",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit push",
     "db:studio": "npx drizzle-kit studio"
@@ -33,6 +33,7 @@
     "@types/lodash": "^4.17.16",
     "@types/pg": "^8.15.0",
     "drizzle-kit": "^0.31.1",
+    "tsup": "^8.4.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }

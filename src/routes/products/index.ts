@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { createProduct, deleteProduct, getProductByID, listProducts, updateProduct } from "./productsController";
-import { validateData } from "../../middleware/validationMiddleware";
-import { createdProductSchema,updateProductSchema } from "../../db/productsSchema";
-import { verifyToken,verifySeller } from "../../middleware/authMiddleware";
+import { createProduct, deleteProduct, getProductByID, listProducts, updateProduct } from "./productsController.js";
+import { validateData } from "../../middleware/validationMiddleware.js";
+import { createdProductSchema,updateProductSchema } from "../../db/productsSchema.js";
+import { verifyToken,verifySeller } from "../../middleware/authMiddleware.js";
 // const createProductSchema = z.object({
 //     name: z.string(),
 //     price: z.number({message: "Price should be a number"}),

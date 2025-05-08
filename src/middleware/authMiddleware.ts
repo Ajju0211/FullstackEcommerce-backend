@@ -8,26 +8,29 @@ import jwt from 'jsonwebtoken'
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
 
     const token: unknown = req.cookies['Authorization'];
-    console.log(token)
+
     if (!token) {
         res.status(401).json({ error: "Access denied" });
-        return;
+       
     }
     try {
         if (typeof token == 'string') {
             const decoded = jwt.verify(token, 'your-secret');
             if(typeof decoded != 'object' || decoded?.usersId){
                 res.status(401).json({Error: "Access denied"});
-                return;
+        
             }
 
-            console.log("Decode: ",decoded)
+      
             req.body.seller = decoded.role;
+            req.body.userId = decoded.userId;
             next();
+        } else{
+             res.status(401).json({Error: "Access denied"});
+            
         }
-
     } catch (err) {
-        res.status(401).json({Error: "Access denied"});
+         res.status(401).json({Error: "Access denied"});
     }
 }
 export function verifySeller(req: Request, res: Response, next: NextFunction) {
