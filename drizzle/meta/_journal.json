@@ -8,6 +8,13 @@
       "when": 1746601566060,
       "tag": "0000_old_electro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746630335238,
+      "tag": "0001_lovely_jackal",
+      "breakpoints": true
     }
   ]
 }
