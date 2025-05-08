@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { request, Request, response, Response, Router } from "express";
 import { validateData } from "../../middleware/validationMiddleware";
 import {
     createUsersSchema,
@@ -8,6 +8,13 @@ import {
 import bcrypt from 'bcryptjs';
 import { db } from '../../db/index'
 import { eq } from "drizzle-orm";
+import jwt from 'jsonwebtoken';
+
+
+interface User {
+    email: string,
+    password: string
+}
 
 const router = Router();
 
@@ -23,10 +30,7 @@ router.post('/register', validateData(createUsersSchema), async (req: Request, r
     }
 });
 
-interface User {
-    email: string,
-    password: string
-}
+
 router.post('/login', validateData(loginUsersSchema),async (req, res) => {
    try {
     const { email, password }: User = req.body.cleanBody;
@@ -46,7 +50,19 @@ router.post('/login', validateData(loginUsersSchema),async (req, res) => {
     }
     //@ts-ignore
     delete user.password;
-    res.status(201).json({user})
+
+    const token = jwt.sign({
+        userId: user.id, role: user.role
+    }, 'your-secret',{ expiresIn: '30d'});
+
+    res.cookie("Authorization", token, {
+        httpOnly: true,        // ⛔ Prevents client-side JS access
+        secure: false,          // 🔒 Use HTTPS in production
+        sameSite: "strict",    // 🚫 CSRF protection
+        maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      });
+
+    res.status(201).json({ user});
    } catch (err) {
     res.status(500).send(err)
    }
