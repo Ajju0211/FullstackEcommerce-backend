@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import {
-    createOrder,
-  
+  createOrder,
+  getOrder,
+  listOrders,
+  updateOrder,
 } from './ordersControllers';
 import { validateData } from '../../middleware/validationMiddleware.js';
 import { insertOrderWithItemsSchema, updateOrderSchema } from '../../db/orderSchema.js';
@@ -16,8 +18,9 @@ router.post(
   createOrder
 );
 
-router.get('/', verifyToken, );
-router.get('/:id', verifyToken, );
-router.put('/:id', verifyToken, validateData(updateOrderSchema), );
+
+router.get('/', verifyToken, listOrders);
+router.get('/:id', verifyToken, getOrder);
+router.put('/:id', verifyToken, validateData(updateOrderSchema), updateOrder);
 
 export default router;
